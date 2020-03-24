@@ -37,9 +37,7 @@ y otra para géneros
 # Construccion de modelos
 
 """def newCatalog():
-    """
-    #Inicializa el catálogo y retorna el catalogo inicializado.
-    """
+ 
     catalog = {'booksTitleTree':None,'yearsTree':None,'booksList':None}
     #implementación de Black-Red Tree (brt) por default
     catalog['booksTitleTree'] = tree.newMap ()
@@ -51,7 +49,7 @@ def newCatalog():
     """
     Inicializa el catálogo y retorna el catalogo inicializado.
     """
-    catalog = {dateTree':None,'accidentsList':None}
+    catalog = {'dateTree':None,'accidentsList':None}
     #implementación de Black-Red Tree (brt) por default
     catalog['dateTree'] = tree.newMap ()
     catalog['accidentsList'] = lt.newList("ARRAY_LIST")
@@ -81,9 +79,7 @@ def addBookTree (catalog, row):
     catalog['booksTitleTree']  = tree.put(catalog['booksTitleTree'] , book['title'], book, greater)
 
 """def newYear (year, row):
-    """
-    #Crea una nueva estructura para almacenar los libros por año 
-    """
+  
     yearNode = {"year": year, "ratingMap":None,}
     yearNode ['ratingMap'] = map.newMap(11,maptype='CHAINING')
     intRating = round(float(row['average_rating']))
@@ -94,17 +90,15 @@ def newDate (date, row):
     """
     Crea una nueva estructura para almacenar los libros por año 
     """
-    dateNode = {"date": year, "severityMap":None,}
+    dateNode = {"date": date, "severityMap":None,}
     dateNode ['severityMap'] = map.newMap(7,maptype='PROBING')
-    intSeverity = int(row['Severity']))
+    intSeverity = int(row['Severity'])
     map.put(dateNode['severityMap'],intSeverity, 1, compareByKey)
-    return yearNode
+    return dateNode
 
 
 """def addYearTree (catalog, row):
-    """
-    #Adiciona el libro al arbol anual key=original_publication_year
-    """
+   
     yearText= row['original_publication_year']
     if row['original_publication_year']:
         yearText=row['original_publication_year'][0:row['original_publication_year'].index('.')]     
@@ -130,7 +124,7 @@ def addDateTree (catalog, row):
     date = strToDate(DateText,'%Y/%m/%d')
     dateNode = tree.get(catalog['dateTree'] , date, greater)
     if dateNode:
-        severity = int(row['Severity']))
+        severity = int(row['Severity'])
         severityCount = map.get(dateNode['severityMap'], severity, compareByKey)
         if  severityCount:
             severityCount+=1
