@@ -54,7 +54,7 @@ def newCatalog():
     catalog = {dateTree':None,'accidentsList':None}
     #implementación de Black-Red Tree (brt) por default
     catalog['dateTree'] = tree.newMap ()
-    catalog['booksList'] = lt.newList("ARRAY_LIST")
+    catalog['accidentsList'] = lt.newList("ARRAY_LIST")
     return catalog
 
 def newBook (row):
@@ -164,11 +164,9 @@ def selectBookTree (catalog, pos):
     """
     return tree.select(catalog['booksTitleTree'], pos) 
 
-def getBookByYearRating (catalog, year):
-    """
-    Retorna la cantidad de libros para un año y con un rating dado
-    """
-    yearElement=tree.get(catalog['yearsTree'], strToDate(year,'%Y'), greater)
+""" def getBookByYearRating (catalog, year):
+   
+    yearElement=tree.get(catalog['yearsTree'], strToDate(year,'%Y/%m/$d'), greater)
     response=''
     if yearElement:
         ratingList = map.keySet(yearElement['ratingMap'])
@@ -177,8 +175,22 @@ def getBookByYearRating (catalog, year):
             ratingKey = it.next(iteraRating)
             response += 'Rating '+str(ratingKey) + ':' + str(map.get(yearElement['ratingMap'],ratingKey,compareByKey)) + '\n'
         return response
-    return None
+    return None """
 
+def getAccidentByDateSeverity (catalog, date):
+    """
+    Retorna la cantidad de libros para un año y con un rating dado
+    """
+    dateElement=tree.get(catalog['dateTree'], strToDate(date,'%Y/%m/$d'), greater)
+    response=''
+    if dateElement:
+        ratingList = map.keySet(dateElement['severityMap'])
+        iteraRating=it.newIterator(ratingList)
+        while it.hasNext(iteraRating):
+            ratingKey = it.next(iteraRating)
+            response += 'Severity '+str(ratingKey) + ':' + str(map.get(dateElement['severityMap'],ratingKey,compareByKey)) + '\n'
+        return response
+    return None
 # Funciones de comparacion
 
 def compareByKey (key, element):

@@ -74,11 +74,11 @@ def main():
             print("Recursion Limit:",sys.getrecursionlimit())
             catalog = initCatalog ()
             loadData (catalog)
-            print ('Tamaño Lista libros cargados: ' + str(lt.size(catalog['booksList'])))
-            print ('Tamaño árbol Libros por titulo: ' + str(map.size(catalog['booksTitleTree'])))
-            print ('Tamaño árbol Libros por año : ' + str(map.size(catalog['yearsTree'])))
-            print ('Altura árbol por titulo: ' + str(map.height(catalog['booksTitleTree'])))
-            print ('Altura árbol por año: ' + str(map.height(catalog['yearsTree'])))
+            #print ('Tamaño Lista libros cargados: ' + str(lt.size(catalog['booksList'])))
+            #print ('Tamaño árbol Libros por titulo: ' + str(map.size(catalog['booksTitleTree'])))
+            #print ('Tamaño árbol Libros por año : ' + str(map.size(catalog['yearsTree'])))
+            #print ('Altura árbol por titulo: ' + str(map.height(catalog['booksTitleTree'])))
+            #print ('Altura árbol por año: ' + str(map.height(catalog['yearsTree'])))
             
         elif int(inputs[0])==2:
             title = input("Nombre del titulo a buscar: ")
@@ -99,7 +99,7 @@ def main():
             else:
                 print("Libro no encotrado en posicion: ",pos)
         elif int(inputs[0])==5:
-            year = input("Ingrese el año a consultar:")
+            year = input("Ingrese fecha a consultar:")
             response = controller.getBookByYearRating(catalog, year) 
             if response:
                 print(response)
