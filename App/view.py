@@ -99,8 +99,8 @@ def main():
             else:
                 print("Libro no encotrado en posicion: ",pos)
         elif int(inputs[0])==5:
-            year = input("Ingrese fecha a consultar:")
-            response = controller.getBookByYearRating(catalog, year) 
+            year = input("Ingrese la fecha a consultar:")
+            response = controller.getAccidentByDateSeverity(catalog,year)
             if response:
                 print(response)
             else:

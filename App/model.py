@@ -90,10 +90,10 @@ def newDate (date, row):
     """
     Crea una nueva estructura para almacenar los libros por año 
     """
-    dateNode = {"date": date, "severityMap":None,}
-    dateNode ['severityMap'] = map.newMap(7,maptype='PROBING')
+    dateNode = {"date": date, "severityMap":None}
+    dateNode ['severityMap'] = map.newMap(7,maptype='CHAINING')
     intSeverity = int(row['Severity'])
-    map.put(dateNode['severityMap'],intSeverity, 1, compareByKey)
+    map.put(dateNode['severityMap'],intSeverity,1, compareByKey)
     return dateNode
 
 
@@ -175,13 +175,18 @@ def getAccidentByDateSeverity (catalog, date):
     """
     Retorna la cantidad de libros para un año y con un rating dado
     """
-    dateElement=tree.get(catalog['dateTree'], strToDate(date,'%Y/%m/$d'), greater)
+    
+    dateElement = tree.get(catalog['dateTree'], strToDate(date,'%Y/%m/$d') , greater)
+    #print(dateElement)
     response=''
     if dateElement:
         ratingList = map.keySet(dateElement['severityMap'])
+        print(ratingList)
         iteraRating=it.newIterator(ratingList)
         while it.hasNext(iteraRating):
             ratingKey = it.next(iteraRating)
+            print(ratingKey)
+            print(str(map.get(dateElement['severityMap'],ratingKey,compareByKey)))
             response += 'Severity '+str(ratingKey) + ':' + str(map.get(dateElement['severityMap'],ratingKey,compareByKey)) + '\n'
         return response
     return None
