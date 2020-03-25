@@ -49,9 +49,9 @@ def newCatalog():
     """
     Inicializa el catálogo y retorna el catalogo inicializado.
     """
-    catalog = {'dateTree':None,'accidentsList':None}
+    catalog = {'dateTree':None, 'accidentsList':None}
     #implementación de Black-Red Tree (brt) por default
-    catalog['dateTree'] = tree.newMap ()
+    catalog['dateTree'] = tree.newMap()
     catalog['accidentsList'] = lt.newList("ARRAY_LIST")
     return catalog
 
@@ -88,12 +88,12 @@ def addBookTree (catalog, row):
 
 def newDate (date, row):
     """
-    Crea una nueva estructura para almacenar los libros por año 
+    Crea una nueva estructura para almacenar los accidentes por fecha 
     """
-    dateNode = {"date": date, "severityMap":None,}
+    dateNode = {"date": date, "severityMap":None}
     dateNode ['severityMap'] = map.newMap(7,maptype='PROBING')
     intSeverity = int(row['Severity'])
-    map.put(dateNode['severityMap'],intSeverity, 1, compareByKey)
+    map.put(dateNode['severityMap'], intSeverity, 1, compareByKey)
     return dateNode
 
 
@@ -122,7 +122,7 @@ def addDateTree (catalog, row):
     """
     DateText= row['Start_Time']       
     date = strToDate(DateText,'%Y/%m/%d')
-    dateNode = tree.get(catalog['dateTree'] , date, greater)
+    dateNode = tree.get(catalog['dateTree'], date, greater)
     if dateNode:
         severity = int(row['Severity'])
         severityCount = map.get(dateNode['severityMap'], severity, compareByKey)
@@ -133,7 +133,8 @@ def addDateTree (catalog, row):
             map.put(dateNode['severityMap'], severity, 1, compareByKey)
     else:
         dateNode = newDate(date,row)
-        catalog['dateTree']  = tree.put(catalog['dateTree'] , date, dateNode, greater)
+        tree.put(catalog['dateTree'],date,dateNode,greater)
+        
 
 
 
