@@ -36,14 +36,7 @@ y otra para géneros
 
 # Construccion de modelos
 
-"""def newCatalog():
- 
-    catalog = {'booksTitleTree':None,'yearsTree':None,'booksList':None}
-    #implementación de Black-Red Tree (brt) por default
-    catalog['booksTitleTree'] = tree.newMap ()
-    catalog['yearsTree'] = tree.newMap ()
-    catalog['booksList'] = lt.newList("ARRAY_LIST")
-    return catalog """
+
 
 def newCatalog():
     """
@@ -55,36 +48,9 @@ def newCatalog():
     catalog['accidentsList'] = lt.newList("ARRAY_LIST")
     return catalog
 
-def newBook (row):
-    """
-    Crea una nueva estructura para almacenar un libro 
-    """
-    book = {"book_id": row['book_id'], "title":row['title'], "average_rating":row['average_rating'], "ratings_count":row['ratings_count']}
-    return book
 
-def addBookList (catalog, row):
-    """
-    Adiciona libro a la lista
-    """
-    books = catalog['booksList']
-    book = newBook(row)
-    lt.addLast(books, book)
 
-def addBookTree (catalog, row):
-    """
-    Adiciona libro al tree con key=title
-    """
-    book = newBook(row)
-    #catalog['booksTitleTree'] = tree.put(catalog['booksTitleTree'], int(book['book_id']), book, greater)
-    catalog['booksTitleTree']  = tree.put(catalog['booksTitleTree'] , book['title'], book, greater)
 
-"""def newYear (year, row):
-  
-    yearNode = {"year": year, "ratingMap":None,}
-    yearNode ['ratingMap'] = map.newMap(11,maptype='CHAINING')
-    intRating = round(float(row['average_rating']))
-    map.put(yearNode['ratingMap'],intRating, 1, compareByKey)
-    return yearNode"""
 
 def newDate (date, row):
     """
@@ -97,32 +63,13 @@ def newDate (date, row):
     return dateNode
 
 
-"""def addYearTree (catalog, row):
-   
-    yearText= row['original_publication_year']
-    if row['original_publication_year']:
-        yearText=row['original_publication_year'][0:row['original_publication_year'].index('.')]     
-    year = strToDate(yearText,'%Y')
-    yearNode = tree.get(catalog['yearsTree'] , year, greater)
-    if yearNode:
-        intRating = round(float(row['average_rating']))
-        ratingCount = map.get(yearNode['ratingMap'], intRating, compareByKey)
-        if  ratingCount:
-            ratingCount+=1
-            map.put(yearNode['ratingMap'], intRating, ratingCount, compareByKey)
-        else:
-            map.put(yearNode['ratingMap'], intRating, 1, compareByKey)
-    else:
-        yearNode = newYear(year,row)
-        catalog['yearsTree']  = tree.put(catalog['yearsTree'] , year, yearNode, greater)
-        """
+
 def addDateTree (catalog, row):
     """
     Adiciona el libro al arbol anual key=original_publication_year
     """
     DateText= row['Start_Time']     
     DateText = DateText[0:10]  
-    #print(DateText)
     date = strToDate(DateText,'%Y-%m-%d')
     dateNode = tree.get(catalog['dateTree'], date, greater)
     if dateNode:
@@ -143,36 +90,9 @@ def addDateTree (catalog, row):
 # Funciones de consulta
 
 
-def getBookTree (catalog, bookTitle):
-    """
-    Retorna el libro desde el mapa a partir del titulo (key)
-    """
-    return tree.get(catalog['booksTitleTree'], bookTitle, greater)
 
-def rankBookTree (catalog, bookTitle):
-    """
-    Retorna la cantidad de llaves menores (titulos) dentro del arbol
-    """
-    return tree.rank(catalog['booksTitleTree'], bookTitle, greater)
 
-def selectBookTree (catalog, pos):
-    """
-    Retorna la operación select (titulos) dentro del arbol
-    """
-    return tree.select(catalog['booksTitleTree'], pos) 
 
-""" def getBookByYearRating (catalog, year):
-   
-    yearElement=tree.get(catalog['yearsTree'], strToDate(year,'%Y%m/$d'), greater)
-    response=''
-    if yearElement:
-        ratingList = map.keySet(yearElement['ratingMap'])
-        iteraRating=it.newIterator(ratingList)
-        while it.hasNext(iteraRating):
-            ratingKey = it.next(iteraRating)
-            response += 'Rating '+str(ratingKey) + ':' + str(map.get(yearElement['ratingMap'],ratingKey,compareByKey)) + '\n'
-        return response
-    return None """
 
 def getAccidentByDateSeverity (catalog, date):
     """
@@ -180,16 +100,12 @@ def getAccidentByDateSeverity (catalog, date):
     """
     
     dateElement = tree.get(catalog['dateTree'], strToDate(date,'%Y-%m-%d') , greater)
-    #print(dateElement)
     response=''
     if dateElement:
         ratingList = map.keySet(dateElement['severityMap'])
-        #print(ratingList)
         iteraRating=it.newIterator(ratingList)
         while it.hasNext(iteraRating):
             ratingKey = it.next(iteraRating)
-            print(ratingKey)
-            print(str(map.get(dateElement['severityMap'],ratingKey,compareByKey)))
             response += 'Severity '+str(ratingKey) + ':' + str(map.get(dateElement['severityMap'],ratingKey,compareByKey)) + '\n'
         return response
     return None

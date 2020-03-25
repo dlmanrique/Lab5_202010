@@ -97,32 +97,6 @@ def loadData (catalog):
 
 # Funciones llamadas desde la vista y enviadas al modelo
 
-
-def getBookTree(catalog, bookTitle):
-    t1_start = process_time() #tiempo inicial
-    #book=model.getBookInList(catalog, bookTitle)
-    book=model.getBookTree(catalog, bookTitle) 
-    t1_stop = process_time() #tiempo final
-    print("Tiempo de ejecución buscar libro:",t1_stop-t1_start," segundos")   
-    if book:
-        return book
-    else:
-        return None
-
-def rankBookTree(catalog, bookTitle):
-    t1_start = process_time() #tiempo inicial
-    rank=model.rankBookTree(catalog, bookTitle)  
-    t1_stop = process_time() #tiempo final
-    print("Tiempo de ejecución buscar libro (rank):",t1_stop-t1_start," segundos")   
-    return rank
-
-def selectBookTree(catalog, pos):
-    t1_start = process_time() #tiempo inicial
-    rank=model.selectBookTree(catalog, pos) 
-    t1_stop = process_time() #tiempo final
-    print("Tiempo de ejecución buscar libro (rank):",t1_stop-t1_start," segundos")   
-    return rank
-
 def getAccidentByDateSeverity (catalog, date):
     t1_start = process_time() #tiempo inicial
     resp = model.getAccidentByDateSeverity(catalog, date)
