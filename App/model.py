@@ -91,9 +91,9 @@ def newDate (date, row):
     Crea una nueva estructura para almacenar los accidentes por fecha 
     """
     dateNode = {"date": date, "severityMap":None}
-    dateNode ['severityMap'] = map.newMap(7,maptype='PROBING')
+    dateNode ['severityMap'] = map.newMap(7,maptype='CHAINING')
     intSeverity = int(row['Severity'])
-    map.put(dateNode['severityMap'], intSeverity, 1, compareByKey)
+    map.put(dateNode['severityMap'],intSeverity,1, compareByKey)
     return dateNode
 
 
@@ -120,8 +120,10 @@ def addDateTree (catalog, row):
     """
     Adiciona el libro al arbol anual key=original_publication_year
     """
-    DateText= row['Start_Time']       
-    date = strToDate(DateText,'%Y/%m/%d')
+    DateText= row['Start_Time']     
+    DateText = DateText[0:10]  
+    #print(DateText)
+    date = strToDate(DateText,'%Y-%m-%d')
     dateNode = tree.get(catalog['dateTree'], date, greater)
     if dateNode:
         severity = int(row['Severity'])
@@ -161,7 +163,7 @@ def selectBookTree (catalog, pos):
 
 """ def getBookByYearRating (catalog, year):
    
-    yearElement=tree.get(catalog['yearsTree'], strToDate(year,'%Y/%m/$d'), greater)
+    yearElement=tree.get(catalog['yearsTree'], strToDate(year,'%Y%m/$d'), greater)
     response=''
     if yearElement:
         ratingList = map.keySet(yearElement['ratingMap'])
@@ -176,13 +178,18 @@ def getAccidentByDateSeverity (catalog, date):
     """
     Retorna la cantidad de libros para un año y con un rating dado
     """
-    dateElement=tree.get(catalog['dateTree'], strToDate(date,'%Y/%m/$d'), greater)
+    
+    dateElement = tree.get(catalog['dateTree'], strToDate(date,'%Y-%m-%d') , greater)
+    #print(dateElement)
     response=''
     if dateElement:
         ratingList = map.keySet(dateElement['severityMap'])
+        #print(ratingList)
         iteraRating=it.newIterator(ratingList)
         while it.hasNext(iteraRating):
             ratingKey = it.next(iteraRating)
+            print(ratingKey)
+            print(str(map.get(dateElement['severityMap'],ratingKey,compareByKey)))
             response += 'Severity '+str(ratingKey) + ':' + str(map.get(dateElement['severityMap'],ratingKey,compareByKey)) + '\n'
         return response
     return None

@@ -80,7 +80,7 @@ def main():
             #print ('Altura árbol por titulo: ' + str(map.height(catalog['booksTitleTree'])))
             #print ('Altura árbol por año: ' + str(map.height(catalog['yearsTree'])))
             
-        elif int(inputs[0])==2:git 
+        elif int(inputs[0])==2:
             title = input("Nombre del titulo a buscar: ")
             book = controller.getBookTree(catalog,title)
             if book:
@@ -99,8 +99,8 @@ def main():
             else:
                 print("Libro no encotrado en posicion: ",pos)
         elif int(inputs[0])==5:
-            year = input("Ingrese fecha a consultar:")
-            response = controller.getBookByYearRating(catalog, year) 
+            year = input("Ingrese la fecha a consultar:")
+            response = controller.getAccidentByDateSeverity(catalog,year)
             if response:
                 print(response)
             else:
